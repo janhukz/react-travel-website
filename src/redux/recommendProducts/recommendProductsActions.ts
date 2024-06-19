@@ -58,11 +58,11 @@ export const FetchRecommendProductFailActionCreator = (
 // 业务逻辑可以从ui层面挪得到这里，代码分层会更清晰
 export const giveMeDataActionCreator =
   (): ThunkAction<void, RootState, unknown, RecommendProductAction> =>
-  async (dispatch, getState) => {
+  async (dispatch) => {
     dispatch(fetchRecommendProductStartActionCreator())
     try {
       const { data } = await axios.get(
-        'http://123.56.149.216:8080/api/productCollections'
+        'http://82.157.43.234:8080/api/productCollections'
       )
       dispatch(fetchRecommendProductSuccessActionCreator(data))
     } catch (error) {

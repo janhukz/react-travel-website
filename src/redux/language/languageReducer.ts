@@ -4,8 +4,11 @@ import {
   ADD_LANGUAGE,
   LanguageActionTypes
 } from './languageActions'
+
+
 export interface LanguageState {
   language: 'en' | 'zh'
+  // { name: string; code: string }[]：表示一个对象数组，每个数组元素的类型都是 { name: string; code: string }。
   languageList: { name: string; code: string }[]
 }
 

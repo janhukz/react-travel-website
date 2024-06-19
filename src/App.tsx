@@ -10,7 +10,8 @@ const App: React.FC = () => {
           <Route path="/signIn" component={SignInPage}></Route>
           <Route path="/register" component={RegisterPage}></Route>
           <Route path="/detail/:touristRouterId" component={DetailPage}></Route>
-          <Route render={() => <h1>404</h1>}></Route>
+          // 404页面永远放最后的路由
+          <Route render={() => <h1>404 Not Found!</h1>}></Route>
         </Switch>
       </BrowserRouter>
     </div>

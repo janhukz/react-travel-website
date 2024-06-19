@@ -15,6 +15,8 @@ import { Dispatch } from 'redux'
 
 // interface State extends LanguageState {}
 
+
+
 const mapStateToprops = (state: RootState) => {
   return {
     language: state.language.language,
@@ -25,6 +27,7 @@ const mapStateToprops = (state: RootState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     changeLanguage: (code: 'zh' | 'en') => {
+      // 这个action通过Action Creator工厂函数创建
       const action = changeLanguageActionCreator(code)
       dispatch(action)
     },
@@ -59,8 +62,9 @@ class HeaderComponent extends React.Component<PropsType> {
   // }
 
   menuClickHandler = (e) => {
-    // action must be plain object
+    // action must be plain object 
     if (e.key === 'new') {
+      
       // const action = {
       //   type: 'add_new_language',
       //   payload: { code: 'new_lang', name: '新语言' }

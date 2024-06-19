@@ -5,9 +5,6 @@ import { Layout, Typography, Input, Menu, Button, Dropdown } from 'antd'
 import { GlobalOutlined } from '@ant-design/icons'
 import {
   useHistory,
-  useLocation,
-  useParams,
-  useRouteMatch
 } from 'react-router-dom'
 import { useSelector } from '../../redux/hooks' // 代码从store中剥离出来
 import { useDispatch } from 'react-redux'
@@ -18,6 +15,7 @@ import {
 import { useTranslation } from 'react-i18next'
 
 export const Header: React.FC = () => {
+  // 通过hooks方式进行路由
   const history = useHistory()
   const language = useSelector((state) => state.language.language) // 同时，对store中的数据也可动态获取相应数据
 
