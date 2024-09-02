@@ -1,45 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { RouteComponentProps, useParams } from "react-router-dom";
-import axios from "axios";
 import { Spin, Row, Col, Divider, Typography, Anchor, Menu } from "antd";
 import styles from "./DetailPage.module.css";
-import { Header, Footer, ProductIntro, ProductComments } from "../../components";
-import { DatePicker, Space } from "antd";
+import {
+  Header,
+  Footer,
+  ProductIntro,
+  ProductComments,
+} from "../../components";
+import { DatePicker } from "antd";
 import { commentMockData } from "./mockup";
-
+import { getProductDetail } from "../../redux/productionDetail/slice";
+import { useSelector } from "../../redux/hooks";
+import { useDispatch } from "react-redux";
 
 const { RangePicker } = DatePicker;
 interface MatchParams {
-  touristRouterId: string
+  touristRouterId: string;
 }
 
-
-
-export const DetailPage: React.FC<RouteComponentProps<MatchParams>> = (
-      
-) => {
+export const DetailPage: React.FC<RouteComponentProps<MatchParams>> = () => {
   // useParams从url中获取参数
-  const {touristRouterId} = useParams<MatchParams>();
-  console.log(touristRouterId)
-  const [loading,setLoading] = useState<boolean>(true);
-  const [product,setProdcut] = useState<any>(null);
-  const [error,setError] = useState<string | null>(null);
+  const { touristRouterId } = useParams<MatchParams>();
 
-  useEffect(()=>{
-    const fetchData = async()=>{
+  console.log(touristRouterId);
+  // const [loading, setLoading] = useState<boolean>(true);
+  // const [product, setProdcut] = useState<any>(null);
+  // const [error, setError] = useState<string | null>(null);
 
-      try {
-        
-      } catch (error) {
-        
-      }
-      setLoading(true);
-      const {data} = await axios.get(`http://82.157.43.234:8080/api/touristRoutes/${touristRouterId}`);
-      setProdcut(data);
-      setLoading(false);
-    }
-    fetchData();
-  },[])
+  // 使用useSelector来连接产品详情的数据
+  const loading = useSelector((state) => state.productionDetail.loading);
+  const product = useSelector((state) => state.productionDetail.data);
+  const error = useSelector((state) => state.productionDetail.error);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProductDetail(touristRouterId));
+  }, []);
+
   if (loading) {
     return (
       <Spin
@@ -141,4 +140,4 @@ export const DetailPage: React.FC<RouteComponentProps<MatchParams>> = (
       <Footer />
     </>
   );
-}
+};
