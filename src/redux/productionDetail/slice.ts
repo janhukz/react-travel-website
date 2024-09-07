@@ -2,13 +2,13 @@ import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 // Redux-tool-kit 学习
 
-interface ProductionDetailState {
+interface ProductDetailState {
   loading: boolean;
   data: any;
   error: unknown;
 }
 
-const initialState: ProductionDetailState = {
+const initialState: ProductDetailState = {
   loading: true,
   data: null,
   error: null,
@@ -16,7 +16,7 @@ const initialState: ProductionDetailState = {
 
 // retrun promise
 export const getProductDetail = createAsyncThunk(
-  "productionDetail/getProductDetail",
+  "productDetail/getProductDetail",
   async (touristRouteId: string) => {
     const { data } = await axios.get(
       `http://82.157.43.234:8080/api/touristRoutes/${touristRouteId}`
@@ -25,8 +25,8 @@ export const getProductDetail = createAsyncThunk(
   }
 );
 
-export const productionDetailSlice = createSlice({
-  name: "productionDetail",
+export const productDetailSlice = createSlice({
+  name: "productDetail",
   initialState,
   reducers: {},
   extraReducers: (builder) => {

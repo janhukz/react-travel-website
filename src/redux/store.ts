@@ -1,16 +1,18 @@
-import { createStore, applyMiddleware } from "redux";
 import languageReducer from "./language/languageReducer";
 import recommendProductsReducer from "./recommendProducts/recommendProductsReducer";
-import thunk from "redux-thunk";
 import { actionLog } from "./middlewares/actionLog";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { productionDetailSlice } from "./productionDetail/slice";
+import { productDetailSlice } from "./productionDetail/slice";
+import { productSearchSlice } from "./productSearch/slice";
+import { userSlice } from "./user/slice";
 
 // rootReducer是约定俗称的命名，表示所有Reducers的集合体
 const rootReducer = combineReducers({
   language: languageReducer,
   recommendProducts: recommendProductsReducer,
-  productionDetail: productionDetailSlice.reducer,
+  productionDetail: productDetailSlice.reducer,
+  productionSearch: productSearchSlice.reducer,
+  user: userSlice.reducer,
 });
 
 // const store = createStore(rootReducer, applyMiddleware(thunk, actionLog));

@@ -1,5 +1,14 @@
-import React from 'react'
+import React from "react";
+import { UserLayout } from "../../layouts/Userlayout";
+import { SignForm } from "./SignInForm";
 
 export const SignInPage: React.FC = () => {
-  return <div>SignInPage</div>
-}
+  return (
+    <UserLayout>
+      <div>
+        <SignForm></SignForm>
+      </div>
+      ;
+    </UserLayout>
+  );
+};
