@@ -12,8 +12,14 @@ import {
 } from "../../redux/language/languageActions";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-
+import { jwtDecode, JwtPayload as DefaultJwtPayload } from "jwt-decode";
+import { useEffect, useState } from "react";
+import { useSelector } from "../../redux/hooks";
 // interface State extends LanguageState {}
+
+interface JwtPayload extends DefaultJwtPayload {
+  username: string;
+}
 
 const mapStateToprops = (state: RootState) => {
   return {
@@ -84,6 +90,7 @@ class HeaderComponent extends React.Component<PropsType> {
   };
   render() {
     const { history, t } = this.props;
+
     return (
       <div className={styles["app-header"]}>
         {/* top-header */}

@@ -6,7 +6,7 @@ import { Spin } from "antd";
 import { searchProduct } from "../../redux/productSearch/slice";
 import { useSelector } from "../../redux/hooks";
 import { useDispatch } from "react-redux";
-import { MainLayout } from "../../layouts/Mainlayout";
+import { MainLayout } from "../../layouts/mainlayout";
 
 interface MatchParams {
   keywords: string;

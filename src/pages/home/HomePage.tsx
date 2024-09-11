@@ -13,7 +13,7 @@ import { withTranslation, WithTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { RootState } from "../../redux/store";
 import { giveMeDataActionCreator } from "../../redux/recommendProducts/recommendProductsActions";
-import { MainLayout } from "../../layouts/Mainlayout";
+import { MainLayout } from "../../layouts/mainlayout";
 
 const mapStateToprops = (state: RootState) => {
   return {

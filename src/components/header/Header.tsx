@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 import logo from "../../assets/logo.svg";
 import { Layout, Typography, Input, Menu, Button, Dropdown } from "antd";
@@ -11,7 +11,13 @@ import {
   changeLanguageActionCreator,
 } from "../../redux/language/languageActions";
 import { useTranslation } from "react-i18next";
+import { jwtDecode, JwtPayload as DefaultJwtPayload } from "jwt-decode";
+import { userSlice } from "../../redux/user/slice";
 const { Search } = Input;
+
+interface JwtPayload extends DefaultJwtPayload {
+  iss: string;
+}
 
 export const Header: React.FC = () => {
   // 通过hooks方式进行路由
@@ -35,6 +41,23 @@ export const Header: React.FC = () => {
     }
   };
   const { t } = useTranslation();
+  const jwt = useSelector((s) => s.user.token);
+  const [username, setUsername] = useState("");
+
+  const shoppingCartItems = useSelector((s) => s.shoppingCart.items);
+  const shoppingCartLoading = useSelector((s) => s.shoppingCart.loading);
+
+  useEffect(() => {
+    if (jwt) {
+      const token = jwtDecode<JwtPayload>(jwt);
+      setUsername(token.iss);
+    }
+  }, [jwt]);
+
+  const OnLogOut = () => {
+    dispatch(userSlice.actions.logOut()); // 小括号别忘记.这里是函数调用
+    history.push("/");
+  };
   return (
     <div className={styles["app-header"]}>
       {/* top-header */}
@@ -57,14 +80,31 @@ export const Header: React.FC = () => {
           >
             {language === "zh" ? "中文" : "English"}
           </Dropdown.Button>
-          <span className={styles["button-group"]}>
-            <Button onClick={() => history.push("register")}>
-              {t("header.register")}
-            </Button>
-            <Button onClick={() => history.push("signin")}>
-              {t("header.signin")}
-            </Button>
-          </span>
+
+          {jwt ? (
+            <span className={styles["button-group"]}>
+              <span>
+                {t("header.welcome")}
+                <Typography.Text strong>{username}</Typography.Text>
+              </span>
+              <Button
+                loading={shoppingCartLoading}
+                onClick={() => history.push("shoppingCart")}
+              >
+                {t("header.shoppingCart")}({shoppingCartItems.length})
+              </Button>
+              <Button onClick={OnLogOut}>{t("header.signOut")}</Button>
+            </span>
+          ) : (
+            <span className={styles["button-group"]}>
+              <Button onClick={() => history.push("register")}>
+                {t("header.register")}
+              </Button>
+              <Button onClick={() => history.push("signin")}>
+                {t("header.signin")}
+              </Button>
+            </span>
+          )}
         </div>
       </div>
 
@@ -78,7 +118,9 @@ export const Header: React.FC = () => {
         <Search
           placeholder="请输入旅游目的地、主题、或关键字"
           className={styles["search-input"]}
-          loading
+          onSearch={(keywords) => {
+            history.push("/Search/" + keywords);
+          }}
         />
       </Layout.Header>
       <Menu mode={"horizontal"} className={styles["main-menu"]}>

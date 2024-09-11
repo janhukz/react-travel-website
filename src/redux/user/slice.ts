@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import persistor from "../../redux/store";
 
 interface UserState {
   loading: boolean;
@@ -27,7 +28,13 @@ export const SignIn = createAsyncThunk(
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    logOut: (state) => {
+      state.token = null;
+      state.error = null;
+      state.loading = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(SignIn.pending, (state) => {
