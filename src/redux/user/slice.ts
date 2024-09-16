@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import persistor from "../../redux/store";
 
 interface UserState {
   loading: boolean;

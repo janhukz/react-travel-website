@@ -4,14 +4,14 @@ import axios from "axios";
 
 interface ProductDetailState {
   loading: boolean;
-  data: any;
   error: unknown;
+  data: any;
 }
 
 const initialState: ProductDetailState = {
   loading: true,
-  data: null,
   error: null,
+  data: null,
 };
 
 // retrun promise

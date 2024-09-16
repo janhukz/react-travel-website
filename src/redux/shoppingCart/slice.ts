@@ -48,6 +48,22 @@ export const addShoppingCartItem = createAsyncThunk(
   }
 );
 
+export const checkout = createAsyncThunk(
+  "shoppingCart/checkout",
+  async (jwt: string, thunkAPI) => {
+    const { data } = await axios.post(
+      `http://82.157.43.234:8080/api/shoppingCart/checkout`,
+      null,
+      {
+        headers: {
+          Authorization: `bearer ${jwt}`,
+        },
+      }
+    );
+    return data;
+  }
+);
+
 export const clearShoppingCartItem = createAsyncThunk(
   "shoppingCart/clearShoppingCartItem",
   async (parameters: { jwt: string; itemIds: number[] }) => {
